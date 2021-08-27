@@ -1,0 +1,16 @@
+{
+    "name": "pawel-trojnacki/multi-user-blog",
+    "description": "Simple Medium - like application built with PHP and MySed using MVC pattern",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Paweł Trojnacki",
+            "email": "trojnacki.p@outlook.com"
+        }
+    ],
+    "require": {}
+}
