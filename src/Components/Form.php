@@ -35,7 +35,7 @@ class Form
         echo sprintf('<button type="submit" class="btn btn-primary mt-3">%s</button>', $value);
     }
 
-    public function field(string $label, string $name, string $type = 'text')
+    public function field(string $label, string $name, string $type = 'text', string $options = '')
     {
 
         $value = $this->values[$name] ?? null;
@@ -46,9 +46,9 @@ class Form
         echo '<div class="form-floating mb-3">';
 
         if ($type === 'textarea') {
-            echo sprintf('<textarea id="%s" name="%s" class="form-control %s" placeholder="%s" style="height: 100px">%s</textarea>', $name, $name, $validationClass, $name, $value);
+            echo sprintf('<textarea id="%s" name="%s" class="form-control %s" placeholder="%s" %s >%s</textarea>', $name, $name, $validationClass, $name, $options, $value);
         } else {
-            echo sprintf('<input id="%s" name="%s" class="form-control %s" type="%s" value="%s" placeholder="%s" >', $name, $name, $validationClass, $type, $value, $name);
+            echo sprintf('<input id="%s" name="%s" class="form-control %s" type="%s" value="%s" placeholder="%s" %s >', $name, $name, $validationClass, $type, $value, $name, $options);
         }
 
         echo sprintf('<label for="%s" class="form-label">%s</label>', $name, $label);
@@ -64,11 +64,9 @@ class Form
 
         $validationClass = $error ? 'is-invalid' : '';
 
-        echo '<div class="row mb-3">';
-        echo sprintf('<label for="%s" class="col-md-2 col-form-label">%s</label>', $name, $label);
-        echo '<div class="col-sm-10">';
+        echo '<div class="mb-3">';
+        echo sprintf('<label for="%s" class="form-label">%s</label>', $name, $label);
         echo sprintf('<input id="%s" name="%s" class="form-control %s" type="file" %s >', $name, $name, $validationClass, $options);
-        echo '</div>';
         echo '</div>';
 
         $this->errorField($error);

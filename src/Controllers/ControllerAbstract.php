@@ -1,6 +1,6 @@
 <?php
 
-namespace app\controllers;
+namespace App\Controllers;
 
 use App\Middlewares\AuthMiddleware;
 use App\Models\Services\CategoryService;

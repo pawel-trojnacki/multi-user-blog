@@ -13,6 +13,7 @@ require_once ROOT_DIR . '/vendor/autoload.php';
 use App\Core\App;
 
 use App\Controllers\AuthController;
+use App\Controllers\PostController;
 
 $app = new App();
 
@@ -29,5 +30,9 @@ $app->get('/login', [AuthController::class, 'login']);
 $app->post('/login', [AuthController::class, 'handleLogin']);
 
 $app->post('/logout', [AuthController::class, 'logout']);
+
+$app->get('/publish', [PostController::class, 'publish']);
+
+$app->post('/publish', [PostController::class, 'handlePublish']);
 
 $app->run();
