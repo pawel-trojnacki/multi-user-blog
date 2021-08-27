@@ -1,0 +1,1 @@
+<h1 class="m-10 text-3xl text-center">Page not found</h1>

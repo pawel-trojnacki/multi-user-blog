@@ -1,0 +1,57 @@
+body {
+    background-color: #f8f9fa;
+}
+
+main {
+    padding-bottom: 50px;
+}
+
+input:focus, textarea:focus, button:focus {
+    box-shadow: 0 0 2px 1px #12171b8f !important;
+    border: 1px solid #141b20 !important;
+}
+
+.nav-tabs .nav-item .nav-link {
+  color: #6b7075;
+}
+
+.nav-tabs .nav-item .nav-link.active {
+  color: #141b20;
+  background-color: transparent;
+}
+
+.btn-primary {
+  background-color: #141b20;
+  border: 1px solid #141b20;
+}
+
+.btn-outline-primary {
+    border-color: #141b20;
+    color: #141b20;
+}
+
+.btn-primary:hover, .btn-primary:focus ,
+.btn-outline-primary:hover, .btn-outline-primary:focus {
+  background-color: #232d36;
+  border: 1px solid #141b20;
+  color: #fff;
+}
+
+.container-slim {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+@media (min-width: 600px) {
+  .container-slim {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (min-width: 990px) {
+  .search-bar {
+    width: 360px;
+  }
+}
