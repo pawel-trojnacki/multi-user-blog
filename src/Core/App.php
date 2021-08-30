@@ -12,7 +12,7 @@ class App
 
     private array $routes = [];
 
-    public function __construct(private $notFoundController)
+    public function __construct(private array|string $notFound)
     {
         self::$database = new Database();
         self::$session = new Session();
@@ -46,8 +46,8 @@ class App
             }
             call_user_func($handler);
         } else {
-            $notFoundHandler = $this->notFoundController;
-            if(is_array($notFoundHandler)) {
+            $notFoundHandler = $this->notFound;
+            if (is_array($notFoundHandler)) {
                 $instance = new $notFoundHandler[0]();
                 $notFoundHandler[0] = $instance;
             }

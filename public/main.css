@@ -37,6 +37,13 @@ input:focus, textarea:focus, button:focus {
   color: #fff;
 }
 
+.image-fix {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
 .container-slim {
   margin-left: 20px;
   margin-right: 20px;

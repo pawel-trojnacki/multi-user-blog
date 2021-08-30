@@ -13,7 +13,7 @@ $form = new Form($values, $errors);
 
 <div class="container-sm my-5">
 
-    <?php $form->start() ?>
+    <?php $form->start('POST', '', true) ?>
 
     <div class="row">
         <div class="col-xl-8">
@@ -33,4 +33,11 @@ $form = new Form($values, $errors);
     </div>
 
     <?php $form->end() ?>
+
+    <?php if (isset($errors['upload_file_error'])) : ?>
+        <div class="alert alert-danger mt-3">
+            <?php echo $errors['upload_file_error'] ?>
+        </div>
+    <?php endif ?>
+
 </div>

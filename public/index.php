@@ -7,6 +7,7 @@ ini_set('display_startup_errors', 'On');
 error_reporting(E_ALL);
 
 define('ROOT_DIR', dirname(__DIR__));
+define('IMAGE_UPLOAD_DIR', '/uploads/images');
 
 require_once ROOT_DIR . '/vendor/autoload.php';
 
@@ -18,9 +19,7 @@ use App\Controllers\PostController;
 
 $app = new App([NotFoundController::class, 'index']);
 
-$app->get('/', function () {
-    echo phpinfo();
-});
+$app->get('/', [PostController::class, 'home']);
 
 $app->get('/register', [AuthController::class, 'register']);
 

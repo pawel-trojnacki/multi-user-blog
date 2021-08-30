@@ -80,7 +80,7 @@ class ValidationService
                         }
                         break;
                     case self::RULE_FILE_MAX_SIZE:
-                        if (!$field || !isset($field['size']) || $field['size'] > $rule[1]) {
+                        if ($field && (!isset($field['size']) || $field['size'] > $rule[1])) {
                             $err = str_replace(
                                 '{' . self::RULE_FILE_MAX_SIZE . '}',
                                 $rule[2],

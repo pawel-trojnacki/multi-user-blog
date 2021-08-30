@@ -22,10 +22,10 @@ class AuthService
 
     public function register(array $body): array
     {
-        $username = $body['username'];
-        $email = $body['email'];
-        $password = $body['password'];
-        $passwordRepeat = $body['password_repeat'];
+        $username = $body['username'] ?? '';
+        $email = $body['email'] ?? '';
+        $password = $body['password'] ?? '';
+        $passwordRepeat = $body['password_repeat'] ?? '';
 
         $errors = $this->validationService->validate([
             'username' => [
@@ -68,8 +68,8 @@ class AuthService
 
     public function login(array $body): array
     {
-        $name = $body['name'];
-        $password = $body['password'];
+        $name = $body['name'] ?? '';
+        $password = $body['password'] ?? '';
 
         $errors = $this->validationService->validate([
             'name' => [

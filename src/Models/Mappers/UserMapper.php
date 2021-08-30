@@ -16,7 +16,7 @@ class UserMapper
             VALUES (?, ?, ?);'
         );
 
-        $statement->execute([$user->username(), $user->email(), $user->password()]);
+        $statement->execute([$user->username, $user->email, $user->password]);
     }
 
     public function fetchOneByUsernameOrEmail(string $username, string $email): array|false

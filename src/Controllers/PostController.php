@@ -3,9 +3,25 @@
 namespace App\Controllers;
 
 use App\Core\App;
+use App\Models\Services\PostService;
 
 class PostController extends MainControllerAbstract
 {
+    private PostService $postService;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->postService = new PostService();
+    }
+
+    public function home(): void
+    {
+        $posts = $this->postService->fetchAllWithAuthor();
+        $args = ['posts' => $posts];
+        $this->render('home', $args);
+    }
+
     public function publish(): void
     {
         $this->authMiddleware->protectedRoute();
@@ -19,14 +35,26 @@ class PostController extends MainControllerAbstract
     {
         $this->authMiddleware->protectedRoute();
 
+        $userId = $this->authMiddleware->getUserId();
         $body = App::$request->body();
+        $image = App::$request->file('image');
 
-        echo '<pre>';
-        print_r($body);
-        echo '</pre>';
+        $errors = $this->postService->save($body, $image, $userId);
 
-        $content = htmlspecialchars_decode($body['content']);
+        if (empty($errors)) {
+            App::$response->redirect('/posts');
+        } else {
+            $options = $this->categoryService->getAllCategoriesAsValues();
+            $args = ['values' => $body, 'errors' => $errors, 'options' => $options];
+            $this->render('publish', $args);
+        }
 
-        echo $content;
+        // echo '<pre>';
+        // print_r($body);
+        // echo '</pre>';
+
+        // $content = htmlspecialchars_decode($body['content']);
+
+        // echo $content;
     }
 }
