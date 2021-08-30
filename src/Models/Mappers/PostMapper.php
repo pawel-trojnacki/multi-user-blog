@@ -11,10 +11,10 @@ class PostMapper
     {
         $pdo = App::$database->connection();
         $statement = $pdo->prepare('
-            SELECT post_id, post_title, post_description, post_image,
-            post_create_date, user_id, user_name
-            FROM posts
-            INNER JOIN users
+            SELECT post_id, post_title, post_description, post_author,
+            post_image, DATE_FORMAT(post_create_date, "%M %d, %Y %H:%i") AS post_date,
+            user_name, post_category
+            FROM posts JOIN users
             ON post_author = user_id
             ORDER BY post_create_date;
         ');

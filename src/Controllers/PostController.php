@@ -17,8 +17,9 @@ class PostController extends MainControllerAbstract
 
     public function home(): void
     {
+        $categories = $this->categoryService->getAllCategoriesAssoc();
         $posts = $this->postService->fetchAllWithAuthor();
-        $args = ['posts' => $posts];
+        $args = ['posts' => $posts, 'categories' => $categories];
         $this->render('home', $args);
     }
 
