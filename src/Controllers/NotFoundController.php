@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-class NotFoundController extends ControllerAbstract
+class NotFoundController extends MainControllerAbstract
 {
     public function __construct()
     {

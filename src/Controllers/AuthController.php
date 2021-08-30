@@ -6,7 +6,7 @@ use App\Core\App;
 use App\Core\Response;
 use App\Models\Services\AuthService;
 
-class AuthController extends ControllerAbstract
+class AuthController extends MainControllerAbstract
 {
     private AuthService $authService;
 

@@ -13,9 +13,10 @@ require_once ROOT_DIR . '/vendor/autoload.php';
 use App\Core\App;
 
 use App\Controllers\AuthController;
+use App\Controllers\NotFoundController;
 use App\Controllers\PostController;
 
-$app = new App();
+$app = new App([NotFoundController::class, 'index']);
 
 $app->get('/', function () {
     echo phpinfo();

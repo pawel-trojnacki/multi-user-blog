@@ -2,7 +2,6 @@
 
 namespace App\Core;
 
-use App\Controllers\NotFoundController;
 
 class App
 {
@@ -13,7 +12,7 @@ class App
 
     private array $routes = [];
 
-    public function __construct()
+    public function __construct(private $notFoundController)
     {
         self::$database = new Database();
         self::$session = new Session();
@@ -47,9 +46,13 @@ class App
             }
             call_user_func($handler);
         } else {
-            $notFound = new NotFoundController();
+            $notFoundHandler = $this->notFoundController;
+            if(is_array($notFoundHandler)) {
+                $instance = new $notFoundHandler[0]();
+                $notFoundHandler[0] = $instance;
+            }
             self::$response->setStatusCode(Response::NOT_FOUND_CODE);
-            $notFound->index();
+            call_user_func($notFoundHandler);
         }
     }
 }

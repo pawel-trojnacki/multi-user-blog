@@ -2,10 +2,9 @@
 
 namespace App\Controllers;
 
-use App\Controllers\ControllerAbstract;
 use App\Core\App;
 
-class PostController extends ControllerAbstract
+class PostController extends MainControllerAbstract
 {
     public function publish(): void
     {

@@ -2,7 +2,7 @@
     <li class="nav-item me-3 dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="account-dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Your account</a>
 
-        <?php if ($isAuthenticated) : ?>
+        <?php if ($args['isAuthenticated']) : ?>
             <ul class="dropdown-menu" aria-labelledby="account-dropdown">
                 <li>
                     <a class="dropdown-item" href="/profile">Your profile</a>
@@ -41,7 +41,7 @@
     <li class="nav-item dropdown me-3">
         <a class="nav-link dropdown-toggle" href="#" id="discover-dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Discover</a>
         <ul class="dropdown-menu" aria-labelledby="discover-dropdown">
-            <?php foreach ($categories as $cat) : ?>
+            <?php foreach ($args['categories'] as $cat) : ?>
                 <li>
                     <a class="dropdown-item" href="<?php echo $cat['category_name'] ?>">
                         <?php echo $cat['category_name'] ?>
