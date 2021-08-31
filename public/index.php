@@ -8,6 +8,7 @@ error_reporting(E_ALL);
 
 define('ROOT_DIR', dirname(__DIR__));
 define('IMAGE_UPLOAD_DIR', '/uploads/images');
+define('ASSETS_IMAGES_DIR', '/assets/images');
 
 require_once ROOT_DIR . '/vendor/autoload.php';
 

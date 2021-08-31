@@ -33,7 +33,7 @@ class PostService
     {
         $posts = $this->postMapper->fetchAllWithAuthor();
 
-        return array_map(fn ($post) => array_merge($post, ['minutes_read' => $this->calculateMinutesRead($post['post_content'])]) , $posts);
+        return array_map(fn ($post) => array_merge($post, ['minutes_read' => $this->calculateMinutesRead(htmlspecialchars_decode($post['post_content']))]) , $posts);
     }
 
     public function fetchOneByIdWithAuthor(string $postId): array|false {

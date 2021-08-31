@@ -12,11 +12,11 @@ class UserMapper
         $pdo = App::$database->connection();
         $statement = $pdo->prepare(
             'INSERT INTO users
-            (user_name, user_email, user_password)
-            VALUES (?, ?, ?);'
+            (user_name, user_email, user_password, user_description, user_avatar)
+            VALUES (?, ?, ?, ?, ?);'
         );
 
-        $statement->execute([$user->username, $user->email, $user->password]);
+        $statement->execute([$user->username, $user->email, $user->password, $user->description, $user->avatar]);
     }
 
     public function fetchOneByUsernameOrEmail(string $username, string $email): array|false

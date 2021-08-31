@@ -21,7 +21,7 @@ class PostController extends MainControllerAbstract
         $posts = $this->postService->fetchAllWithAuthor();
 
         $args = ['posts' => $posts, 'categories' => $categories];
-        
+
         $this->render('home', $args);
     }
 
@@ -76,13 +76,5 @@ class PostController extends MainControllerAbstract
 
             $this->render('publish', $args);
         }
-
-        // echo '<pre>';
-        // print_r($body);
-        // echo '</pre>';
-
-        // $content = htmlspecialchars_decode($body['content']);
-
-        // echo $content;
     }
 }

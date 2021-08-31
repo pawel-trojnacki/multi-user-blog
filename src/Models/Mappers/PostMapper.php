@@ -17,7 +17,9 @@ class PostMapper
             user_name
             FROM posts JOIN users
             ON post_author = user_id
-            ORDER BY post_create_date DESC;
+            ORDER BY
+            UNIX_TIMESTAMP( post_create_date ) + post_views * 86400
+            DESC;
         ');
         $statement->execute();
         return $statement->fetchAll();
@@ -29,7 +31,7 @@ class PostMapper
             SELECT post_id, post_title, post_description, post_author,
             post_views, post_image, post_category, post_content,
             DATE_FORMAT(post_create_date, "%M %d, %Y") AS post_date,
-            user_name
+            user_name, user_description, user_avatar
             FROM posts JOIN users
             ON post_author = user_id
             WHERE post_id = ?;
