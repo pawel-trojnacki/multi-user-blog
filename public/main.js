@@ -9,7 +9,7 @@ const isEditor = document.getElementById('content');
 if(isEditor) {
     tinymce.init({
         selector: '#content',
-        plugins: 'lists link image fullscreen emoticons codesample wordcount autosave',
+        plugins: 'lists link image fullscreen emoticons codesample wordcount autosave paste',
         codesample_languages: [
             {text: 'HTML', value: 'markup'},
             {text: 'CSS', value: 'css'},
@@ -26,9 +26,10 @@ if(isEditor) {
         toolbar: 'undo redo | restoredraft | fullscreen |formatselect | bold italic underline | bullist numlist | link image emoticons | codesample | wordcount',
         block_formats: 'Paragraph=p; Heading=h2; Subheading=h3',
         height: 400,
-        // setup: initialSetup,
+        preview_styles: false,
         placeholder: 'Your content goes here...',
         codesample_global_prismjs: true,
+        paste_as_text: true
     });
 }
 

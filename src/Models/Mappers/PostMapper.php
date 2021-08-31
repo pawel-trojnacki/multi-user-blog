@@ -12,24 +12,40 @@ class PostMapper
         $pdo = App::$database->connection();
         $statement = $pdo->prepare('
             SELECT post_id, post_title, post_description, post_author,
-            post_image, DATE_FORMAT(post_create_date, "%M %d, %Y %H:%i") AS post_date,
-            user_name, post_category
+            post_views, post_image, post_category, post_content,
+            DATE_FORMAT(post_create_date, "%M %d, %Y") AS post_date,
+            user_name
             FROM posts JOIN users
             ON post_author = user_id
-            ORDER BY post_create_date;
+            ORDER BY post_create_date DESC;
         ');
         $statement->execute();
         return $statement->fetchAll();
     }
 
+    public function fetchOneByIdWithAuthor(string $postId): array|false {
+        $pdo = App::$database->connection();
+        $statement = $pdo->prepare('
+            SELECT post_id, post_title, post_description, post_author,
+            post_views, post_image, post_category, post_content,
+            DATE_FORMAT(post_create_date, "%M %d, %Y") AS post_date,
+            user_name
+            FROM posts JOIN users
+            ON post_author = user_id
+            WHERE post_id = ?;
+        ');
+        $statement->execute([$postId]);
+        return $statement->fetch();
+    }
+
     public function save(PostEntity $post): void
     {
         $pdo = App::$database->connection();
-        $statement = $pdo->prepare(
-            'INSERT INTO posts
+        $statement = $pdo->prepare('
+            INSERT INTO posts
             (post_title, post_description, post_content, post_image, post_author, post_category)
-            VALUES (?, ?, ?, ?, ?, ?);'
-        );
+            VALUES (?, ?, ?, ?, ?, ?);
+        ');
 
         $statement->execute([
             $post->title,

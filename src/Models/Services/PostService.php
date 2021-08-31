@@ -13,6 +13,8 @@ class PostService
 
     private const ALLOWED_TAGS = ['<p>', '<strong>', '<em>', '<u>', '<h2>', '<h3>', '<img>', '<pre>', '<li>', '<ol>', '<ul>', '<span>', '<div>', '<br>', '<ins>', '<del>'];
     private const IMAGE_UPLOAD_ERR = 'Something went wrong with the image upload';
+    
+    private const WORDS_PER_MINUTE = 250;
 
     public function __construct()
     {
@@ -21,9 +23,25 @@ class PostService
         $this->postMapper = new PostMapper();
     }
 
+    private function calculateMinutesRead(string $content): int {
+        $cleanContent = strip_tags($content);
+        $wordCount = str_word_count($cleanContent);
+        return ceil($wordCount / self::WORDS_PER_MINUTE);
+    }
+
     public function fetchAllWithAuthor(): array
     {
-        return $this->postMapper->fetchAllWithAuthor();
+        $posts = $this->postMapper->fetchAllWithAuthor();
+
+        return array_map(fn ($post) => array_merge($post, ['minutes_read' => $this->calculateMinutesRead($post['post_content'])]) , $posts);
+    }
+
+    public function fetchOneByIdWithAuthor(string $postId): array|false {
+        $post = $this->postMapper->fetchOneByIdWithAuthor($postId);
+
+        $post['post_content'] = htmlspecialchars_decode($post['post_content']);
+
+        return array_merge($post, ['minutes_read' => $this->calculateMinutesRead($post['post_content'])]);
     }
 
     public function save(array $body, array $image, string $userId): array

@@ -21,6 +21,8 @@ $app = new App([NotFoundController::class, 'index']);
 
 $app->get('/', [PostController::class, 'home']);
 
+$app->get('/post', [PostController::class, 'single']);
+
 $app->get('/register', [AuthController::class, 'register']);
 
 $app->post('/register', [AuthController::class, 'handleRegister']);

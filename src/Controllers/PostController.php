@@ -19,8 +19,31 @@ class PostController extends MainControllerAbstract
     {
         $categories = $this->categoryService->getAllCategoriesAssoc();
         $posts = $this->postService->fetchAllWithAuthor();
+
         $args = ['posts' => $posts, 'categories' => $categories];
+        
         $this->render('home', $args);
+    }
+
+    public function single(): void {
+        $postId = App::$request->body()['id'];
+        
+        if(!$postId) {
+            App::$response->redirect('/');
+        }
+
+        $post = $this->postService->fetchOneByIdWithAuthor($postId);
+        
+        if(!$post) {
+            App::$response->redirect('/');
+        }
+
+        $categories = $this->categoryService->getAllCategoriesAssoc();
+
+        $args = ['post' => $post, 'categories' => $categories];
+
+        $this->render('single-post', $args);
+
     }
 
     public function publish(): void
@@ -28,7 +51,9 @@ class PostController extends MainControllerAbstract
         $this->authMiddleware->protectedRoute();
 
         $options = $this->categoryService->getAllCategoriesAsValues();
+
         $args = ['options' => $options];
+
         $this->render('publish', $args);
     }
 
@@ -46,7 +71,9 @@ class PostController extends MainControllerAbstract
             App::$response->redirect('/posts');
         } else {
             $options = $this->categoryService->getAllCategoriesAsValues();
+
             $args = ['values' => $body, 'errors' => $errors, 'options' => $options];
+
             $this->render('publish', $args);
         }
 

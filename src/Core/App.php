@@ -2,7 +2,6 @@
 
 namespace App\Core;
 
-
 class App
 {
     public static Database $database;

@@ -10,7 +10,8 @@ class PostEntity
         public string $content,
         public string $image,
         public string $category,
-        public string $author
+        public string $author,
+        public int $views = 0,
     ) {
     }
 }
