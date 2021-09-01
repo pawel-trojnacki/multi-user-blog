@@ -45,5 +45,4 @@ $app->get('/post-like', [LikeController::class, 'currentPostLike']);
 
 $app->post('/post-like', [LikeController::class, 'handlePostLike']);
 
-
 $app->run();
