@@ -34,8 +34,20 @@ $categories = $args['categories'];
 
         <img class="img-fluid mb-5" src="<?php echo $post['post_image'] ?>" alt="">
 
-        <div class="post-content">
+        <div class="post-content mb-5">
             <?php echo $post['post_content'] ?>
+        </div>
+
+        <div class="actions mb-5 d-flex">
+            <div class="likes">
+                <input type="hidden" name="post_id" id="post-id" value="<?php echo $post['post_id'] ?>">
+                <button id="like-button" class="btn btn-outline-primary">
+                    <span class="fs-5">
+                        <i id="like-thumb" class="bi-hand-thumbs-up"></i> 
+                    </span>
+                    <span id="likes-number">Loading...</span>
+                </button>
+            </div>
         </div>
 
         <section class="author-info">
