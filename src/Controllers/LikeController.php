@@ -16,18 +16,17 @@ class LikeController extends MainControllerAbstract {
 
     public function postLikesNumber(): void {
         $postId = App::$request->body()['id'];
+
+        $response = [];
         
         if(!$postId) {
-            $response = ['likes' => 0];
-            header('Content-Type: application/json');
-            echo json_encode($response);
+            $response['likes'] = 0;
         } else {
             $likesNumber = $this->postLikesService->getLikesNumber($postId);
-
-            $response = ['likes' => $likesNumber];
-            header('Content-Type: application/json');
-            echo json_encode($response);
+            $response['likes'] = $likesNumber;
         }
+
+        App::$response->json($response);
     }
 
     public function currentPostLike(): void {
@@ -43,15 +42,12 @@ class LikeController extends MainControllerAbstract {
                 $response['like'] = true;
             }
         }
-        header('Content-Type: application/json');
-        echo json_encode($response);
+
+        App::$response->json($response);
     }
 
     public function handlePostLike(): void {
-        // $body = App::$request->body();
-        $json = file_get_contents('php://input');
-
-        $body = json_decode($json);
+        $body = App::$request->json();
 
         $postId = $body->id;
 
@@ -66,7 +62,6 @@ class LikeController extends MainControllerAbstract {
             $response['success'] = true;
         }
         
-        header('Content-Type: application/json');
-        echo json_encode($response);
+        App::$response->json($response);
     }
 }

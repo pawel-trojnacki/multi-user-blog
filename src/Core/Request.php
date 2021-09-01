@@ -43,4 +43,9 @@ class Request
     {
         return $_FILES[$name] ?? [];
     }
+
+    public function json(): object {
+        $json = file_get_contents('php://input');
+        return json_decode($json);
+    }
 }

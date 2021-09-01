@@ -6,6 +6,7 @@ class Response
 {
     public const NOT_FOUND_CODE = 404;
     public const BAD_REQUEST_CODE = 400;
+    public const CREATED_CODE = 201;
 
     public const DEFAULT_LAYOUT = 'main';
 
@@ -41,6 +42,11 @@ class Response
     public function redirect(string $location): void
     {
         header('Location: ' . $location);
+    }
+
+    public function json(array $res) {
+        header('Content-Type: application/json');
+        echo json_encode($res);
     }
 
 }
