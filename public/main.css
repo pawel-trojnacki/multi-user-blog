@@ -97,3 +97,37 @@ input:focus, textarea:focus, button:focus {
     width: 360px;
   }
 }
+
+.comments-modal {
+  background-color: #141b2028;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  width: 100%;
+  height: 100vh;
+}
+
+.comments-wrapper {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  right: 0;
+  width: 500px;
+  overflow-y: scroll;
+  height: 100%;
+  background-color: #fff;
+  box-shadow: -3px 0 7px 0px #141b2050;
+  transform: translateX(0);
+  transition: transform 0.3s ease;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.comments-wrapper-hidden {
+  transform: translateX(100%);
+}

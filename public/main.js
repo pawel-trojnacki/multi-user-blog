@@ -72,10 +72,10 @@ if (likeButton) {
   async function like() {
     const response = await fetch(`/post-like?id=${postId}`, {
       method: "POST",
-      body: JSON.stringify({id: postId}),
+      body: JSON.stringify({ id: postId }),
       headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        "Content-Type": "application/json",
+        Accept: "application/json",
       },
     });
 
@@ -94,4 +94,30 @@ if (likeButton) {
   setIsLike();
 
   likeButton.addEventListener("click", like);
+}
+
+const commentsButton = document.getElementById("comments-button");
+
+if (commentsButton) {
+  const closeButton = document.getElementById("comments-close-button");
+  const modal = document.getElementById("comments-modal");
+  const wrapper = document.getElementById("comments-wrapper");
+
+  function toggleCommentsModalVisibility() {
+    modal.classList.toggle("hidden");
+  }
+
+  function toggleCommentsWrapperTransform() {
+    wrapper.classList.toggle("comments-wrapper-hidden");
+  }
+
+  commentsButton.addEventListener("click", function () {
+    toggleCommentsModalVisibility();
+    toggleCommentsWrapperTransform();
+  });
+
+  closeButton.addEventListener("click", function () {
+    toggleCommentsModalVisibility();
+    toggleCommentsWrapperTransform();
+  });
 }
