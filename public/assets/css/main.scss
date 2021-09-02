@@ -1,14 +1,14 @@
 body {
-    background-color: $gray-100;
-    font-family: 'Inter', sans-serif;
+  background-color: $gray-100;
+  font-family: "Inter", sans-serif;
 }
 
 h1 {
-  font-family: 'Kaisei HarunoUmi', serif;
+  font-family: "Kaisei HarunoUmi", serif;
 }
 
 main {
-    padding-bottom: 50px;
+  padding-bottom: 50px;
 }
 
 a {
@@ -21,9 +21,13 @@ a:hover {
   color: $cyan-800;
 }
 
-input:focus, textarea:focus, button:focus {
-    box-shadow: 0 0 2px 1px #0000008f !important;
-    border: 1px solid $primary !important;
+input:focus,
+textarea:focus,
+button:focus,
+.btn-primary:focus,
+.btn-outline-primary:focus {
+  box-shadow: 0 0 2px 1px #0000005e !important;
+  border: 1px solid $primary !important;
 }
 
 .nav-tabs .nav-item .nav-link {
@@ -35,8 +39,10 @@ input:focus, textarea:focus, button:focus {
   background-color: transparent;
 }
 
-.btn-primary:hover, .btn-primary:focus ,
-.btn-outline-primary:hover, .btn-outline-primary:focus {
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
   background-color: $gray-800;
   border: 1px solid $primary;
   color: #fff;
@@ -61,7 +67,6 @@ input:focus, textarea:focus, button:focus {
 .post-content p {
   text-align: justify;
 }
-
 
 @media (max-width: 768px) {
   .card-image {
@@ -105,13 +110,19 @@ input:focus, textarea:focus, button:focus {
   z-index: 10;
   top: 0;
   right: 0;
-  width: 500px;
+  width: 100%;
   overflow-y: scroll;
   height: 100%;
   background-color: #fff;
   box-shadow: -3px 0 7px 0px #00000050;
   transform: translateX(0);
   transition: transform 0.3s ease;
+}
+
+@media (min-width: 600px) {
+  .comments-wrapper {
+    width: 500px;
+  }
 }
 
 .hidden {

@@ -15,6 +15,7 @@ require_once ROOT_DIR . '/vendor/autoload.php';
 use App\Core\App;
 
 use App\Controllers\AuthController;
+use App\Controllers\CommentController;
 use App\Controllers\LikeController;
 use App\Controllers\NotFoundController;
 use App\Controllers\PostController;
@@ -44,5 +45,7 @@ $app->get('/post-likes', [LikeController::class, 'postLikesNumber']);
 $app->get('/post-like', [LikeController::class, 'currentPostLike']);
 
 $app->post('/post-like', [LikeController::class, 'handlePostLike']);
+
+$app->get('/api/post-comments', [CommentController::class, 'postComments']);
 
 $app->run();
