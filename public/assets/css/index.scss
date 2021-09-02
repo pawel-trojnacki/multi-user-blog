@@ -1,0 +1,14 @@
+// @import "~bootstrap/scss/bootstrap";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+
+$primary: $cyan-900;
+
+$theme-colors: (
+  primary: $cyan-900
+);
+
+@import "~bootstrap";
+
+@import 'main';
+@import 'prism';

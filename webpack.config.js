@@ -1,4 +1,7 @@
 const path = require("path");
+const MiniCSSExtractPlugin = require("mini-css-extract-plugin");
+const UglifyJs = require("uglifyjs-webpack-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 const JS_DIR = path.resolve(__dirname, "public/assets/javascript");
 const OUTPUT_DIR = path.resolve(__dirname, "public/build");
@@ -12,8 +15,15 @@ const output = {
   filename: "javascript/index.js",
 };
 
-module.exports = {
+const plugins = () => [
+  new MiniCSSExtractPlugin({
+    filename: "css/index.css",
+  }),
+];
+
+module.exports = (_, argv) => ({
   entry,
+  devtool: "source-map",
   module: {
     rules: [
       {
@@ -22,10 +32,22 @@ module.exports = {
         exclude: /node_modules/,
         use: "babel-loader",
       },
+      {
+        test: /\.(scss)$/,
+        use: [MiniCSSExtractPlugin.loader, "css-loader", "sass-loader"],
+      },
     ],
   },
-  // resolve: {
-  //   extensions: ["*", ".js"],
-  // },
   output,
-};
+  optimization: {
+    minimizer: [
+      new CssMinimizerPlugin(),
+      new UglifyJs({
+        cache: false,
+        parallel: true,
+        sourceMap: false,
+      }),
+    ],
+  },
+  plugins: plugins(argv),
+});
