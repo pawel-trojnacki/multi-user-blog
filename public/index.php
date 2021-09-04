@@ -48,4 +48,8 @@ $app->post('/post-like', [LikeController::class, 'handlePostLike']);
 
 $app->get('/api/post-comments', [CommentController::class, 'postComments']);
 
+$app->get('/api/post-comments-number', [CommentController::class, 'postCommentsNumber']);
+
+$app->post('/api/post-comment', [CommentController::class, 'handleSaveComment']);
+
 $app->run();

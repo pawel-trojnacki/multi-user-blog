@@ -25,16 +25,17 @@ class PostController extends MainControllerAbstract
         $this->render('home', $args);
     }
 
-    public function single(): void {
+    public function single(): void
+    {
         $postId = App::$request->body()['id'];
-        
-        if(!$postId) {
+
+        if (!$postId) {
             App::$response->redirect('/');
         }
 
         $post = $this->postService->fetchOneByIdWithAuthor($postId);
-        
-        if(!$post) {
+
+        if (!$post) {
             App::$response->redirect('/');
         }
 
@@ -43,7 +44,6 @@ class PostController extends MainControllerAbstract
         $args = ['post' => $post, 'categories' => $categories];
 
         $this->render('single-post', $args);
-
     }
 
     public function publish(): void

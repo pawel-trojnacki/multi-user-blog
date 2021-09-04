@@ -9,7 +9,7 @@ class UserEntity
         public string $email,
         public string $password,
         public string $description = '',
-        public string $avatar = ASSETS_IMAGES_DIR . 'avatar.png',
+        public string $avatar = ASSETS_IMAGES_DIR . '/avatar.png',
     ) {
     }
 }

@@ -52,9 +52,9 @@ $categories = $args['categories'];
             </button>
             <button id="comments-button" class="btn">
                 <span class="fs-5">
-                    <i id="like-thumb" class="bi-chat"></i>
+                    <i class="bi-chat"></i>
                 </span>
-                <span id="likes-number">11</span>
+                <span id="comments-number">Loading...</span>
             </button>
         </div>
 
@@ -97,11 +97,12 @@ $categories = $args['categories'];
             </button>
         </div>
         <div class="mb-4">
-            <form action="#">
+            <form action="#" id="comment-form">
                 <div class="form-floating mb-3">
                     <textarea class="form-control" name="comment-field" placeholder="Leave a comment here" id="comment-field" style="height: 100px"></textarea>
                     <label for="comment-field">What do you think?</label>
                 </div>
+                <div class="text-danger mb-2" id="comment-invalid"></div>
                 <div class="d-flex flex-row-reverse">
                     <input type="submit" class="btn btn-primary btn-sm" value="Send">
                 </div>

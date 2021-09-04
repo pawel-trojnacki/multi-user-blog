@@ -5,8 +5,10 @@ namespace App\Models\Mappers;
 use App\Core\App;
 use App\Models\Entities\PostLikeEntity;
 
-class PostLikeMapper {
-    public function fetchCountByPostId(string $postId): string {
+class PostLikeMapper
+{
+    public function fetchLikesNumberByPostId(string $postId): string
+    {
         $pdo = App::$database->connection();
         $statement = $pdo->prepare('
             SELECT COUNT(post_like_id) FROM post_likes
@@ -17,7 +19,8 @@ class PostLikeMapper {
         return $statement->fetchColumn();
     }
 
-    public function fetchOneByPostIdAndUserId(string $postId, string $userId): array|false {
+    public function fetchOneByPostIdAndUserId(string $postId, string $userId): array|false
+    {
         $pdo = App::$database->connection();
         $statement = $pdo->prepare('
             SELECT * FROM post_likes
@@ -28,7 +31,8 @@ class PostLikeMapper {
         return $statement->fetch();
     }
 
-    public function save(PostLikeEntity $like): void {
+    public function save(PostLikeEntity $like): void
+    {
         $pdo = App::$database->connection();
         $statement = $pdo->prepare('
             INSERT INTO post_likes
@@ -38,7 +42,8 @@ class PostLikeMapper {
         $statement->execute([$like->postId, $like->userId]);
     }
 
-    public function deleteById(string $likeId): void {
+    public function deleteById(string $likeId): void
+    {
         $pdo = App::$database->connection();
         $statement = $pdo->prepare('
             DELETE FROM post_likes
