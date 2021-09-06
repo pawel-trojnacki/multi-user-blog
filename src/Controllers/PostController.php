@@ -18,11 +18,55 @@ class PostController extends MainControllerAbstract
     public function home(): void
     {
         $categories = $this->categoryService->getAllCategoriesAssoc();
-        $posts = $this->postService->fetchAllWithAuthor();
+        $posts = $this->postService->fetchTrendingWithAuthor();
 
         $args = ['posts' => $posts, 'categories' => $categories];
 
         $this->render('home', $args);
+    }
+
+    public function posts(): void
+    {
+        $page = App::$request->page();
+        $categoryId = App::$request->body()['category'] ?? '';
+
+        $categories = $this->categoryService->getAllCategoriesAssoc();
+
+        if ($categoryId && array_key_exists($categoryId, $categories)) {
+            $title = 'Category: ' . $categories[$categoryId];
+            $postsNumber = $this->postService->fetchPostsNumberByCategoryId($categoryId);
+            $posts = $this->postService->fetchAllWithAuthorByCategoryId($categoryId, $page);
+        } else {
+            $title = 'All Posts';
+            $postsNumber = $this->postService->fetchAllPostsNumber();
+            $posts = $this->postService->fetchAllWithAuthor($page);
+        }
+
+        $pages = $postsNumber > 4 ? (int)ceil($postsNumber / 4) : 1;
+
+        $args = ['title' => $title, 'category' => $categoryId, 'activePage' => $page, 'posts' => $posts, 'pages' => $pages, 'categories' => $categories];
+
+        $this->render('posts', $args);
+    }
+
+    public function userPosts(): void
+    {
+        $this->authMiddleware->protectedRoute();
+
+        $userId = $this->authMiddleware->getUserId();
+
+        $page = App::$request->page();
+
+        $posts = $this->postService->fetchAllByUserId($userId, $page);
+        $categories = $this->categoryService->getAllCategoriesAssoc();
+
+        $postsNumber = $this->postService->fetchPostsNumberByUserId($userId);
+
+        $pages = $postsNumber > 4 ? (int)ceil($postsNumber / 4) : 1;
+
+        $args = ['posts' => $posts, 'categories' => $categories, 'activePage' => $page, 'pages' => $pages, 'isAuthor' => true];
+
+        $this->render('user-posts', $args);
     }
 
     public function single(): void
@@ -42,6 +86,8 @@ class PostController extends MainControllerAbstract
         $categories = $this->categoryService->getAllCategoriesAssoc();
 
         $args = ['post' => $post, 'categories' => $categories];
+
+        $this->postService->updateViewsByPostId($postId);
 
         $this->render('single-post', $args);
     }

@@ -24,7 +24,11 @@ $app = new App([NotFoundController::class, 'index']);
 
 $app->get('/', [PostController::class, 'home']);
 
+$app->get('/posts', [PostController::class, 'posts']);
+
 $app->get('/post', [PostController::class, 'single']);
+
+$app->get('/user-posts', [PostController::class, 'userPosts']);
 
 $app->get('/register', [AuthController::class, 'register']);
 

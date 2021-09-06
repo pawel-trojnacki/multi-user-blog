@@ -30,6 +30,8 @@ $categories = $args['categories'];
                         <span>
                             <?php echo $post['minutes_read'] ?> min read
                         </span>
+                        |
+                        <span><?php echo $post['post_views'] ?> views</span>
                     </small>
                 </p>
             </header>

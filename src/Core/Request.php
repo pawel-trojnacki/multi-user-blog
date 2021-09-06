@@ -44,8 +44,22 @@ class Request
         return $_FILES[$name] ?? [];
     }
 
-    public function json(): object {
+    public function json(): object
+    {
         $json = file_get_contents('php://input');
         return json_decode($json);
+    }
+
+    public function page(): int
+    {
+        $page = $this->body()['page'] ?? '';
+
+        if ($page && is_numeric($page)) {
+            $page = (int)$page;
+        } else {
+            $page = 1;
+        };
+
+        return $page;
     }
 }

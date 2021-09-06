@@ -16,16 +16,9 @@ $categories = $args['categories'] ?? [];
 </header>
 
 <section class="container-sm my-5">
-    <h2 class="mb-4 fs-4">Trending stories</h2>
-    <div class="row">
-        <?php if (sizeof($posts) > 0) : ?>
-            <?php foreach ($posts as $post) : ?>
-                <div class="col-xl-6 d-flex align-items-stretch">
-                    <?php require ROOT_DIR . '/src/Views/template-parts/post-card.php' ?>
-                </div>
-            <?php endforeach ?>
-        <?php else : ?>
-            <p>There are no posts.</p>
-        <?php endif ?>
+    <h2 class="mb-4 fs-4">Trending on Medium</h2>
+    <?php require ROOT_DIR . '/src/Views/template-parts/posts-grid.php' ?>
+    <div class="d-flex flex-row-reverse">
+        <a class="btn btn-primary" href="/posts">See more articles</a>
     </div>
 </section>

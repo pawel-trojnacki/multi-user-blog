@@ -8,7 +8,7 @@
                     <a class="dropdown-item" href="/profile">Your profile</a>
                 </li>
                 <li>
-                    <a class="dropdown-item" href="#">Your posts</a>
+                    <a class="dropdown-item" href="/user-posts">Your posts</a>
                 </li>
                 <li>
                     <hr class="dropdown-divider">
@@ -43,7 +43,7 @@
         <ul class="dropdown-menu" aria-labelledby="discover-dropdown">
             <?php foreach ($args['categories'] as $cat) : ?>
                 <li>
-                    <a class="dropdown-item" href="<?php echo $cat['category_name'] ?>">
+                    <a class="dropdown-item" href="<?php echo '/posts?category=' . $cat['category_id'] ?>">
                         <?php echo $cat['category_name'] ?>
                     </a>
                 </li>

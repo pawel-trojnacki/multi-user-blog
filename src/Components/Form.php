@@ -19,23 +19,23 @@ class Form
         }
     }
 
-    public function start(string $method = 'POST', string $action = '', bool $multipart = false)
+    public function start(string $method = 'POST', string $action = '', bool $multipart = false): void
     {
         $enctype = $multipart ? 'enctype="multipart/form-data"' : '';
         echo sprintf('<form method="%s" action="%s" %s >', $method, $action, $enctype);
     }
 
-    public function end()
+    public function end(): void
     {
         echo '</form>';
     }
 
-    public function submit(string $value = 'Submit')
+    public function submit(string $value = 'Submit'): void
     {
         echo sprintf('<button type="submit" class="btn btn-primary mt-3">%s</button>', $value);
     }
 
-    public function field(string $label, string $name, string $type = 'text', string $options = '')
+    public function field(string $label, string $name, string $type = 'text', string $options = ''): void
     {
 
         $value = $this->values[$name] ?? null;
@@ -97,7 +97,7 @@ class Form
         echo sprintf('<input type="hidden" name="%s" value="%s">', $name, $value);
     }
 
-    public function deleteButton(string $value = 'Delete')
+    public function deleteButton(string $value = 'Delete'): void
     {
         echo sprintf('<input type="submit" class="btn btn-sm btn-outline-danger" value="%s">', $value);
     }

@@ -17,7 +17,7 @@
 
     <?php require_once ROOT_DIR . '/src/Views/template-parts/navigation.php' ?>
 
-    <main>
+    <main class="page">
         {{content}}
     </main>
 

@@ -30,11 +30,63 @@ class PostService
         return ceil($wordCount / self::WORDS_PER_MINUTE);
     }
 
-    public function fetchAllWithAuthor(): array
+    private function postWithMinutesToRead(array $post): array
     {
-        $posts = $this->postMapper->fetchAllWithAuthor();
+        return array_merge($post, ['minutes_read' => $this->calculateMinutesRead(htmlspecialchars_decode($post['post_content']))]);
+    }
 
-        return array_map(fn ($post) => array_merge($post, ['minutes_read' => $this->calculateMinutesRead(htmlspecialchars_decode($post['post_content']))]), $posts);
+    private function getOffset(int $page): int
+    {
+        $offset = ($page - 1) * 4;
+
+        return $offset;
+    }
+
+    public function fetchAllByUserId(string $userId, int|string $page): array
+    {
+        $offset = $this->getOffset($page);
+        $posts = $this->postMapper->fetchAllByUserId($userId, $offset);
+
+        return array_map(fn ($post) => $this->postWithMinutesToRead($post), $posts);
+    }
+
+    public function fetchTrendingWithAuthor(): array
+    {
+        $posts = $this->postMapper->fetchTrendingWithAuthor();
+
+        return array_map(fn ($post) => $this->postWithMinutesToRead($post), $posts);
+    }
+
+    public function fetchAllWithAuthor(int|string $page): array
+    {
+        $offset = $this->getOffset($page);
+        $posts = $this->postMapper->fetchAllWithAuthor($offset);
+
+        return array_map(fn ($post) => $this->postWithMinutesToRead($post), $posts);
+    }
+
+    public function fetchAllWithAuthorByCategoryId(string $categoryId, int|string $page): array
+    {
+        $offset = $this->getOffset($page);
+
+        $posts = $this->postMapper->fetchAllWithAuthorByCategoryId($categoryId, $offset);
+
+        return array_map(fn ($post) => $this->postWithMinutesToRead($post), $posts);
+    }
+
+    public function fetchAllPostsNumber(): int
+    {
+        return $this->postMapper->fetchAllPostsNumber();
+    }
+
+    public function fetchPostsNumberByCategoryId(string $categoryId): int
+    {
+        return $this->postMapper->fetchPostsNumberByCategoryId($categoryId);
+    }
+
+    public function fetchPostsNumberByUserId(string $userId): int
+    {
+        return $this->postMapper->fetchPostsNumberByUserId($userId);
     }
 
     public function fetchOneByIdWithAuthor(string $postId): array|false
@@ -43,7 +95,7 @@ class PostService
 
         $post['post_content'] = htmlspecialchars_decode($post['post_content']);
 
-        return array_merge($post, ['minutes_read' => $this->calculateMinutesRead($post['post_content'])]);
+        return $this->postWithMinutesToRead($post);
     }
 
     public function save(array $body, array $image, string $userId): array
@@ -91,5 +143,10 @@ class PostService
         $this->postMapper->save($post);
 
         return $errors;
+    }
+
+    public function updateViewsByPostId(string $postId): void
+    {
+        $this->postMapper->updateViewsByPostId($postId);
     }
 }

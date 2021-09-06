@@ -7,10 +7,6 @@ h1 {
   font-family: "Kaisei HarunoUmi", serif;
 }
 
-main {
-  padding-bottom: 50px;
-}
-
 a {
   color: inherit;
   text-decoration: none;
@@ -28,6 +24,10 @@ button:focus,
 .btn-outline-primary:focus {
   box-shadow: 0 0 2px 1px #0000005e !important;
   border: 1px solid $primary !important;
+}
+
+.page {
+  padding-bottom: 50px;
 }
 
 .nav-tabs .nav-item .nav-link {
@@ -136,4 +136,17 @@ button:focus,
 
 .comments-wrapper-hidden {
   transform: translateX(100%);
+}
+
+.page-link {
+  color: $primary;
+}
+
+.page-link:hover {
+  color: $cyan-800;
+}
+
+.page-item.active .page-link {
+  background-color: $primary;
+  border-color: $primary;
 }
