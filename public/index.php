@@ -28,7 +28,17 @@ $app->get('/posts', [PostController::class, 'posts']);
 
 $app->get('/post', [PostController::class, 'single']);
 
+$app->get('/publish', [PostController::class, 'publish']);
+
+$app->post('/publish', [PostController::class, 'handlePublish']);
+
 $app->get('/user-posts', [PostController::class, 'userPosts']);
+
+$app->get('/update-post', [PostController::class, 'update']);
+
+$app->post('/update-post', [PostController::class, 'handleUpdate']);
+
+$app->post('/delete-post', [PostController::class, 'delete']);
 
 $app->get('/register', [AuthController::class, 'register']);
 
@@ -39,10 +49,6 @@ $app->get('/login', [AuthController::class, 'login']);
 $app->post('/login', [AuthController::class, 'handleLogin']);
 
 $app->post('/logout', [AuthController::class, 'logout']);
-
-$app->get('/publish', [PostController::class, 'publish']);
-
-$app->post('/publish', [PostController::class, 'handlePublish']);
 
 $app->get('/post-likes', [LikeController::class, 'postLikesNumber']);
 

@@ -1,15 +1,9 @@
 export function editor() {
-    function initialSetup(editor) {
-        editor.on("init", function (e) {
-          editor.setContent("<p>Your content goes here...</p>");
-        });
-      }
+      const content = document.getElementById("post_content");
       
-      const isEditor = document.getElementById("content");
-      
-      if (isEditor) {
+      if (content) {
         tinymce.init({
-          selector: "#content",
+          selector: '#post_content',
           plugins:
             "lists link image fullscreen emoticons codesample wordcount autosave paste",
           codesample_languages: [
