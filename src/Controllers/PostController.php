@@ -87,7 +87,7 @@ class PostController extends MainControllerAbstract
 
         $args = ['post' => $post, 'categories' => $categories];
 
-        $this->postService->updateViewsByPostId($postId);
+        $this->postService->updateViewsById($postId);
 
         $this->render('single-post', $args);
     }
@@ -109,12 +109,12 @@ class PostController extends MainControllerAbstract
 
         $userId = $this->authMiddleware->getUserId();
         $body = App::$request->body();
-        $image = App::$request->file('image');
+        $image = App::$request->file('post_image');
 
         $errors = $this->postService->save($body, $image, $userId);
 
         if (empty($errors)) {
-            App::$response->redirect('/posts');
+            App::$response->redirect('/user-posts');
         } else {
             $options = $this->categoryService->getAllCategoriesAsValues();
 
@@ -122,5 +122,75 @@ class PostController extends MainControllerAbstract
 
             $this->render('publish', $args);
         }
+    }
+
+    public function update(): void
+    {
+        $this->authMiddleware->protectedRoute();
+
+        $postId = App::$request->body()['id'] ?? '';
+
+        if (!$postId) {
+            App::$response->redirect('/user-posts');
+        }
+
+        $updatedPost = $this->postService->fetchOneByIdWithAuthor($postId);
+
+        $this->authMiddleware->authorize($updatedPost['post_author']);
+
+        $options = $this->categoryService->getAllCategoriesAsValues();
+
+        $args = ['options' => $options, 'values' => $updatedPost];
+
+        $this->render('publish', $args);
+    }
+
+    public function handleUpdate(): void
+    {
+        $this->authMiddleware->protectedRoute();
+
+        $postId = App::$request->body()['post_id'] ?? '';
+
+        if (!$postId) {
+            App::$response->redirect('/user-posts');
+        }
+
+        $updatedPost = $this->postService->fetchOneByIdWithAuthor($postId);
+
+        $this->authMiddleware->authorize($updatedPost['post_author']);
+
+        $body = App::$request->body();
+        $image = App::$request->file('post_image') ?? null;
+
+        $errors = $this->postService->update($updatedPost, $body, $image);
+
+        if (empty($errors)) {
+            App::$response->redirect('/user-posts');
+        } else {
+            $options = $this->categoryService->getAllCategoriesAsValues();
+
+            $args = ['values' => $body, 'errors' => $errors, 'options' => $options];
+
+            $this->render('publish', $args);
+        }
+    }
+
+    public function delete()
+    {
+        $this->authMiddleware->protectedRoute();
+
+        $postId = App::$request->body()['delete_post_id'] ?? '';
+
+        if (!$postId) {
+            App::$response->redirect('/user-posts');
+        }
+
+        $post = $this->postService->fetchOneByIdWithAuthor($postId);
+
+        $this->authMiddleware->authorize($post['post_author']);
+
+        $this->postService->delete($post);
+
+        App::$response->redirect('/user-posts');
     }
 }

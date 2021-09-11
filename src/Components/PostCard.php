@@ -130,11 +130,26 @@ class PostCard
         $this->endText();
     }
 
-    public function actions(): void
+    public function startActions(): void
     {
         echo  '<div class="d-flex">';
-        echo '<a href="#" class="btn">Edit</a>';
-        echo '<a href="#" class="btn text-danger">Delete</a>';
+    }
+
+    public function endActions(): void
+    {
         echo '</div>';
+    }
+
+    public function editButton(): void
+    {
+        echo sprintf('<a href="%s" class="btn">Edit</a>', '/update-post?id=' . $this->post['post_id']);
+    }
+
+    public function deleteButton(): void
+    {
+        echo '<form class="d-inline" method="POST" action="/delete-post">';
+        echo sprintf('<input type="hidden" name="delete_post_id" value="%s">', $this->post['post_id']);
+        echo '<button type="submit" class="btn text-danger">Delete</button>';
+        echo '</form>';
     }
 }

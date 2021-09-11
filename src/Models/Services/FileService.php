@@ -22,4 +22,9 @@ class FileService
 
         return false;
     }
+
+    public function delete(string $path): void
+    {
+        unlink(ROOT_DIR . '/public' . $path);
+    }
 }

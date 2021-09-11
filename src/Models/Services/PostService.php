@@ -100,35 +100,39 @@ class PostService
 
     public function save(array $body, array $image, string $userId): array
     {
-        $title = $body['title'] ?? '';
-        $category = $body['category'] ?? '';
-        $description = $body['description'] ?? '';
-        $content = $body['content'] ?? '';
+        $title = $body['post_title'] ?? '';
+        $category = $body['post_category'] ?? '';
+        $description = $body['post_description'] ?? '';
+        $content = $body['post_content'] ?? '';
 
         $errors = $this->validationService->validate([
-            'title' => [$title, [
+            'post_title' => [$title, [
                 ValidationService::RULE_REQUIRED,
                 [ValidationService::RULE_MIN, 8],
                 [ValidationService::RULE_MAX, 50]
             ]],
-            'category' => [$category, [
+            'post_category' => [$category, [
                 ValidationService::RULE_REQUIRED,
             ]],
-            'description' => [$description, [
+            'post_description' => [$description, [
                 ValidationService::RULE_REQUIRED,
                 [ValidationService::RULE_MIN, 10],
                 [ValidationService::RULE_MAX, 100]
             ]],
-            'content' => [$content, [
+            'post_content' => [$content, [
                 ValidationService::RULE_REQUIRED,
                 [ValidationService::RULE_MIN, 1000],
                 [ValidationService::RULE_MAX, 65000]
             ]],
-            'image' => [$image, [
+            'post_image' => [$image, [
                 ValidationService::RULE_FILE_REQUIRED,
-                [ValidationService::RULE_FILE_MAX_SIZE, 500000]
+                [ValidationService::RULE_FILE_MAX_SIZE, 2000000, '2mb']
             ]]
         ]);
+
+        if (!empty($errors)) {
+            return $errors;
+        }
 
         $imagePath = $this->fileService->save($image);
 
@@ -145,8 +149,81 @@ class PostService
         return $errors;
     }
 
-    public function updateViewsByPostId(string $postId): void
+    public function update(array $updatedPost, array $body, ?array $image = null): array
     {
-        $this->postMapper->updateViewsByPostId($postId);
+        $title = $body['post_title'] ?? '';
+        $category = $body['post_category'] ?? '';
+        $description = $body['post_description'] ?? '';
+        $content = $body['post_content'] ?? '';
+
+        $validation = [
+            'post_title' => [$title, [
+                ValidationService::RULE_REQUIRED,
+                [ValidationService::RULE_MIN, 8],
+                [ValidationService::RULE_MAX, 50]
+            ]],
+            'post_category' => [$category, [
+                ValidationService::RULE_REQUIRED,
+            ]],
+            'post_description' => [$description, [
+                ValidationService::RULE_REQUIRED,
+                [ValidationService::RULE_MIN, 10],
+                [ValidationService::RULE_MAX, 100]
+            ]],
+            'post_content' => [$content, [
+                ValidationService::RULE_REQUIRED,
+                [ValidationService::RULE_MIN, 1000],
+                [ValidationService::RULE_MAX, 65000]
+            ]],
+        ];
+
+        if ($image) {
+            $validation['post_image'] = [$image, [
+                ValidationService::RULE_FILE_REQUIRED,
+                [ValidationService::RULE_FILE_MAX_SIZE, 2000000, '2mb']
+            ]];
+        }
+
+        $errors = $this->validationService->validate($validation);
+
+        if (!empty($errors)) {
+            return $errors;
+        }
+
+        $isImageUpdated = false;
+
+        $imagePath = $updatedPost['post_image'];
+
+        if ($image) {
+            $imagePath = $this->fileService->save($image);
+            $isImageUpdated = true;
+        }
+
+        if (!$imagePath) {
+            $errors['uploading_file_error'] = self::IMAGE_UPLOAD_ERR;
+            return $errors;
+        }
+
+        $content = strip_tags($content, self::ALLOWED_TAGS);
+
+        $post = new PostEntity($title, $description, $content, $imagePath, $category);
+        $this->postMapper->updateById($post, $updatedPost['post_id']);
+
+        if ($isImageUpdated) {
+            $this->fileService->delete($updatedPost['post_image']);
+        }
+
+        return $errors;
+    }
+
+    public function updateViewsById(string $postId): void
+    {
+        $this->postMapper->updateViewsById($postId);
+    }
+
+    public function delete(array $post)
+    {
+        $this->fileService->delete($post['post_image']);
+        $this->postMapper->deleteById($post['post_id']);
     }
 }

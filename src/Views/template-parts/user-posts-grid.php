@@ -21,7 +21,10 @@ use App\Components\PostCard;
             $postCard->info();
 
             if ($isAuthor) {
-                $postCard->actions();
+                $postCard->startActions();
+                $postCard->editButton();
+                $postCard->deleteButton();
+                $postCard->endActions();
             }
 
             $postCard->endBody();

@@ -37,6 +37,7 @@ class AuthMiddleware
 
         if (!$userId) {
             $this->notAuthorizedRedirect();
+            exit();
         }
     }
 
@@ -46,6 +47,7 @@ class AuthMiddleware
 
         if (!$userId === $authorId) {
             $this->notAuthorizedRedirect();
+            exit();
         }
     }
 }

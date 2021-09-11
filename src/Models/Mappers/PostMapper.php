@@ -147,12 +147,44 @@ class PostMapper
         ]);
     }
 
-    public function updateViewsByPostId(string $postId): void
+    public function updateById(PostEntity $post, string $postId): void
+    {
+        $pdo = App::$database->connection();
+        $statement = $pdo->prepare('
+            UPDATE posts SET
+            post_title = ?,
+            post_description = ?,
+            post_content = ?,
+            post_image = ?,
+            post_category = ?
+            WHERE post_id = ?
+        ');
+
+        $statement->execute([
+            $post->title,
+            $post->description,
+            $post->content,
+            $post->image,
+            $post->category,
+            $postId
+        ]);
+    }
+
+    public function updateViewsById(string $postId): void
     {
         $pdo = App::$database->connection();
         $statement = $pdo->prepare('
             UPDATE posts SET post_views = post_views + 1
             WHERE post_id = ?;
+        ');
+        $statement->execute([$postId]);
+    }
+
+    public function deleteById(string $postId): void
+    {
+        $pdo = App::$database->connection();
+        $statement = $pdo->prepare('
+            DELETE FROM posts WHERE post_id = ?;
         ');
         $statement->execute([$postId]);
     }

@@ -21,9 +21,8 @@
         {{content}}
     </main>
 
-    <script src="assets/javascript/prism.js"></script>
     <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-
+    <script src="assets/javascript/prism.js"></script>
     <script src="build/javascript/index.js"></script>
 
 </body>

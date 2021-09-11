@@ -6,6 +6,8 @@ $options = $args['options'];
 $values = $args['values'] ?? [];
 $errors = $args['errors'] ?? [];
 
+$postId = $values['post_id'] ?? false;
+
 $form = new Form($values, $errors);
 ?>
 
@@ -16,17 +18,22 @@ $form = new Form($values, $errors);
     <?php $form->start('POST', '', true) ?>
 
     <div class="row">
+        <?php
+        if ($postId) {
+            $form->hiddenField('post_id', $postId);
+        }
+        ?>
         <div class="col-xl-8">
-            <?php $form->field('Title', 'title') ?>
-            <?php $form->field('Short description', 'description', 'textarea', 'style="height: 80px"') ?>
+            <?php $form->field('Title', 'post_title') ?>
+            <?php $form->field('Short description', 'post_description', 'textarea', 'style="height: 80px"') ?>
         </div>
         <div class="col-xl-4">
-            <?php $form->select('Category', 'category', $options) ?>
-            <?php $form->fileField('Featured image', 'image', 'accept="image/*"') ?>
+            <?php $form->select('Category', 'post_category', $options) ?>
+            <?php $form->fileField('Featured image', 'post_image', 'accept="image/*"') ?>
         </div>
     </div>
 
-    <?php $form->field('Content', 'content', 'textarea') ?>
+    <?php $form->field('Content', 'post_content', 'textarea') ?>
 
     <div class="d-flex flex-row-reverse">
         <?php $form->submit('Publish') ?>
