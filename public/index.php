@@ -19,6 +19,7 @@ use App\Controllers\CommentController;
 use App\Controllers\LikeController;
 use App\Controllers\NotFoundController;
 use App\Controllers\PostController;
+use App\Controllers\UserController;
 
 $app = new App([NotFoundController::class, 'index']);
 
@@ -32,7 +33,7 @@ $app->get('/publish', [PostController::class, 'publish']);
 
 $app->post('/publish', [PostController::class, 'handlePublish']);
 
-$app->get('/user-posts', [PostController::class, 'userPosts']);
+$app->get('/profile-posts', [PostController::class, 'userPosts']);
 
 $app->get('/update-post', [PostController::class, 'update']);
 
@@ -49,6 +50,14 @@ $app->get('/login', [AuthController::class, 'login']);
 $app->post('/login', [AuthController::class, 'handleLogin']);
 
 $app->post('/logout', [AuthController::class, 'logout']);
+
+$app->get('/profile', [UserController::class, 'profile']);
+
+$app->post('/update-user-description', [UserController::class, 'updateDescription']);
+
+$app->post('/update-user-password', [UserController::class, 'updatePassword']);
+
+$app->post('/update-user-avatar', [UserController::class, 'updateAvatar']);
 
 $app->get('/post-likes', [LikeController::class, 'postLikesNumber']);
 

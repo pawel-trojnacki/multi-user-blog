@@ -3,24 +3,24 @@
 namespace App\Controllers;
 
 use App\Core\App;
-use App\Middlewares\AuthMiddleware;
+use App\Helpers\AuthHelper;
 use App\Models\Services\CategoryService;
 
 abstract class MainControllerAbstract
 {
 
-    protected AuthMiddleware $authMiddleware;
+    protected AuthHelper $authHelper;
     protected CategoryService $categoryService;
 
     public function __construct()
     {
-        $this->authMiddleware = new AuthMiddleware();
+        $this->authHelper = new AuthHelper();
         $this->categoryService = new CategoryService();
     }
 
     public function render(string $view, array $args = [], array $options = []): void
     {
-        $isAuthenticated = $this->authMiddleware->isAuthenticated();
+        $isAuthenticated = $this->authHelper->isAuthenticated();
         $categories = $this->categoryService->getAllCategories();
 
         $layoutArgs = ['isAuthenticated' => $isAuthenticated, 'categories' => $categories];

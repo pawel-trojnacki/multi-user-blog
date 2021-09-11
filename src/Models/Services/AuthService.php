@@ -9,7 +9,7 @@ use App\Models\Mappers\UserMapper;
 class AuthService
 {
     public const INVALID_CREDENTIALS = 'invalid_credentials';
-    public const USER_EXISTS = 'is-existing';
+    public const USER_EXISTS = 'is_existing';
 
     private ValidationService $validationService;
     private UserMapper $userMapper;

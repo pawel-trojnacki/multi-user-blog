@@ -8,7 +8,7 @@
                     <a class="dropdown-item" href="/profile">Your profile</a>
                 </li>
                 <li>
-                    <a class="dropdown-item" href="/user-posts">Your posts</a>
+                    <a class="dropdown-item" href="/profile-posts">Your posts</a>
                 </li>
                 <li>
                     <hr class="dropdown-divider">

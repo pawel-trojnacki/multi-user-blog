@@ -12,7 +12,6 @@ class PostService
     private PostMapper $postMapper;
 
     private const ALLOWED_TAGS = ['<p>', '<strong>', '<em>', '<u>', '<h2>', '<h3>', '<img>', '<pre>', '<li>', '<ol>', '<ul>', '<span>', '<div>', '<br>', '<ins>', '<del>'];
-    private const IMAGE_UPLOAD_ERR = 'Something went wrong with the image upload';
 
     private const WORDS_PER_MINUTE = 250;
 
@@ -137,7 +136,7 @@ class PostService
         $imagePath = $this->fileService->save($image);
 
         if (!$imagePath) {
-            $errors['uploading_file_error'] = self::IMAGE_UPLOAD_ERR;
+            $errors['uploading_file_error'] = FileService::IMAGE_UPLOAD_ERR;
             return $errors;
         }
 
@@ -200,7 +199,7 @@ class PostService
         }
 
         if (!$imagePath) {
-            $errors['uploading_file_error'] = self::IMAGE_UPLOAD_ERR;
+            $errors['uploading_file_error'] = FileService::IMAGE_UPLOAD_ERR;
             return $errors;
         }
 

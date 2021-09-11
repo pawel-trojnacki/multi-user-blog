@@ -31,7 +31,7 @@ class UserMapper
         return $statement->fetch();
     }
 
-    public function fetchOneByUserId(string $userId): array|false
+    public function fetchOneById(string $userId): array|false
     {
         $pdo = App::$database->connection();
         $statement = $pdo->prepare('
@@ -40,5 +40,41 @@ class UserMapper
         ');
         $statement->execute([$userId]);
         return $statement->fetch();
+    }
+
+    public function updateAvatarById(string $imagePath, string $userId): void
+    {
+        $pdo = App::$database->connection();
+        $statement = $pdo->prepare('
+            UPDATE users
+            SET user_avatar = ?
+            WHERE user_id = ?;
+        ');
+
+        $statement->execute([$imagePath, $userId]);
+    }
+
+    public function updateDescriptionById(string $description, string $userId): void
+    {
+        $pdo = App::$database->connection();
+        $statement = $pdo->prepare('
+            UPDATE users
+            SET user_description = ?
+            WHERE user_id = ?;
+        ');
+
+        $statement->execute([$description, $userId]);
+    }
+
+    public function updatePasswordById(string $password, string $userId): void
+    {
+        $pdo = App::$database->connection();
+        $statement = $pdo->prepare('
+            UPDATE users
+            SET user_password = ?
+            WHERE user_id = ?;
+        ');
+
+        $statement->execute([$password, $userId]);
     }
 }

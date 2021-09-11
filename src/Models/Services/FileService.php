@@ -4,6 +4,8 @@ namespace App\Models\Services;
 
 class FileService
 {
+    public const IMAGE_UPLOAD_ERR = 'Something went wrong with the image upload';
+
     public function save(array $file): string|false
     {
         $tmpName = $file['tmp_name'];

@@ -42,9 +42,9 @@ $form = new Form($values, $errors);
     <?php $form->end() ?>
 
     <?php if (isset($errors['upload_file_error'])) : ?>
-        <div class="alert alert-danger mt-3">
+        <p class="text-danger mt-3">
             <?php echo $errors['upload_file_error'] ?>
-        </div>
+        </p>
     <?php endif ?>
 
 </div>

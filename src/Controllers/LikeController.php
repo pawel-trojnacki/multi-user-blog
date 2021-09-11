@@ -5,7 +5,8 @@ namespace App\Controllers;
 use App\Core\App;
 use App\Models\Services\PostLikeService;
 
-class LikeController extends MainControllerAbstract {
+class LikeController extends MainControllerAbstract
+{
     private PostLikeService $postLikesService;
 
     public function __construct()
@@ -14,12 +15,13 @@ class LikeController extends MainControllerAbstract {
         $this->postLikesService = new PostLikeService();
     }
 
-    public function postLikesNumber(): void {
+    public function postLikesNumber(): void
+    {
         $postId = App::$request->body()['id'];
 
         $response = [];
-        
-        if(!$postId) {
+
+        if (!$postId) {
             $response['likes'] = 0;
         } else {
             $likesNumber = $this->postLikesService->getLikesNumber($postId);
@@ -29,16 +31,17 @@ class LikeController extends MainControllerAbstract {
         App::$response->json($response);
     }
 
-    public function currentPostLike(): void {
+    public function currentPostLike(): void
+    {
         $postId = App::$request->body()['id'];
 
-        $userId = $this->authMiddleware->getUserId();
+        $userId = $this->authHelper->getUserId();
 
         $response = ['like' => false];
 
-        if($userId) {
+        if ($userId) {
             $like = $this->postLikesService->getIsLiked($postId, $userId);
-            if($like) {
+            if ($like) {
                 $response['like'] = true;
             }
         }
@@ -46,22 +49,23 @@ class LikeController extends MainControllerAbstract {
         App::$response->json($response);
     }
 
-    public function handlePostLike(): void {
+    public function handlePostLike(): void
+    {
         $body = App::$request->json();
 
         $postId = $body->id;
 
-        $userId = $this->authMiddleware->getUserId();
+        $userId = $this->authHelper->getUserId();
 
         $response = [];
 
-        if(!$userId) {
+        if (!$userId) {
             $response['error'] = 'notAuthenticated';
         } else {
             $this->postLikesService->like($postId, $userId);
             $response['success'] = true;
         }
-        
+
         App::$response->json($response);
     }
 }

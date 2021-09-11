@@ -43,11 +43,13 @@ $form = new Form($values, $errors);
     <?php $form->end() ?>
 
     <?php if ($existingUserError) : ?>
-        <div class="alert alert-danger mt-3">User with this username or email already exists.</div>
+        <p class="text-danger mt-3">
+            User with this username or email already exists.
+        </p>
     <?php endif ?>
 
     <?php if ($success) : ?>
-        <div class="alert alert-success mt-3">Registration completed. You can now <a href="/login">log in</a></div>
+        <p class="text-success mt-3">Registration completed. You can now <a href="/login" style="text-decoration: underline;">log in</a></p>
     <?php endif ?>
 
 </div>

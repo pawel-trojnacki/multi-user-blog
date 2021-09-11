@@ -51,9 +51,9 @@ class PostController extends MainControllerAbstract
 
     public function userPosts(): void
     {
-        $this->authMiddleware->protectedRoute();
+        $this->authHelper->protectedRoute();
 
-        $userId = $this->authMiddleware->getUserId();
+        $userId = $this->authHelper->getUserId();
 
         $page = App::$request->page();
 
@@ -94,7 +94,7 @@ class PostController extends MainControllerAbstract
 
     public function publish(): void
     {
-        $this->authMiddleware->protectedRoute();
+        $this->authHelper->protectedRoute();
 
         $options = $this->categoryService->getAllCategoriesAsValues();
 
@@ -105,16 +105,16 @@ class PostController extends MainControllerAbstract
 
     public function handlePublish(): void
     {
-        $this->authMiddleware->protectedRoute();
+        $this->authHelper->protectedRoute();
 
-        $userId = $this->authMiddleware->getUserId();
+        $userId = $this->authHelper->getUserId();
         $body = App::$request->body();
         $image = App::$request->file('post_image');
 
         $errors = $this->postService->save($body, $image, $userId);
 
         if (empty($errors)) {
-            App::$response->redirect('/user-posts');
+            App::$response->redirect('/profile-posts');
         } else {
             $options = $this->categoryService->getAllCategoriesAsValues();
 
@@ -126,17 +126,17 @@ class PostController extends MainControllerAbstract
 
     public function update(): void
     {
-        $this->authMiddleware->protectedRoute();
+        $this->authHelper->protectedRoute();
 
         $postId = App::$request->body()['id'] ?? '';
 
         if (!$postId) {
-            App::$response->redirect('/user-posts');
+            App::$response->redirect('/profile-posts');
         }
 
         $updatedPost = $this->postService->fetchOneByIdWithAuthor($postId);
 
-        $this->authMiddleware->authorize($updatedPost['post_author']);
+        $this->authHelper->authorize($updatedPost['post_author']);
 
         $options = $this->categoryService->getAllCategoriesAsValues();
 
@@ -147,25 +147,27 @@ class PostController extends MainControllerAbstract
 
     public function handleUpdate(): void
     {
-        $this->authMiddleware->protectedRoute();
+        $this->authHelper->protectedRoute();
 
         $postId = App::$request->body()['post_id'] ?? '';
 
         if (!$postId) {
-            App::$response->redirect('/user-posts');
+            App::$response->redirect('/profile-posts');
         }
 
         $updatedPost = $this->postService->fetchOneByIdWithAuthor($postId);
 
-        $this->authMiddleware->authorize($updatedPost['post_author']);
+        $this->authHelper->authorize($updatedPost['post_author']);
 
         $body = App::$request->body();
-        $image = App::$request->file('post_image') ?? null;
+        $image = App::$request->file('post_image');
+
+        $image = $image['name'] ? $image : null;
 
         $errors = $this->postService->update($updatedPost, $body, $image);
 
         if (empty($errors)) {
-            App::$response->redirect('/user-posts');
+            App::$response->redirect('/profile-posts');
         } else {
             $options = $this->categoryService->getAllCategoriesAsValues();
 
@@ -177,20 +179,20 @@ class PostController extends MainControllerAbstract
 
     public function delete()
     {
-        $this->authMiddleware->protectedRoute();
+        $this->authHelper->protectedRoute();
 
         $postId = App::$request->body()['delete_post_id'] ?? '';
 
         if (!$postId) {
-            App::$response->redirect('/user-posts');
+            App::$response->redirect('/profile-posts');
         }
 
         $post = $this->postService->fetchOneByIdWithAuthor($postId);
 
-        $this->authMiddleware->authorize($post['post_author']);
+        $this->authHelper->authorize($post['post_author']);
 
         $this->postService->delete($post);
 
-        App::$response->redirect('/user-posts');
+        App::$response->redirect('/profile-posts');
     }
 }

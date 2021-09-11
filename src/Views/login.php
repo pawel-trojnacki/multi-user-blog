@@ -33,7 +33,7 @@ $form = new Form($values, $errors);
     <?php $form->end() ?>
 
     <?php if ($crredentialsError) : ?>
-        <div class="alert alert-danger mt-3">Invalid credentials</div>
+        <p class="mt-3 text-danger">Invalid credentials</p>
     <?php endif ?>
 
 </div>

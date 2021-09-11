@@ -35,7 +35,7 @@ class CommentController extends MainControllerAbstract
 
     public function handleSaveComment(): void
     {
-        $userId = $this->authMiddleware->getUserId();
+        $userId = $this->authHelper->getUserId();
 
         if (!$userId) {
             App::$response->json(['notAuthenticated' => true, 'success' => false]);

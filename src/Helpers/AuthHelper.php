@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Middlewares;
+namespace App\Helpers;
 
 use App\Core\App;
 
-class AuthMiddleware
+class AuthHelper
 {
     public const USER_ID = 'user_id';
     public const AUTH_REDIRECT_ROUTE = '/login';
