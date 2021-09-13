@@ -9,7 +9,7 @@ $isAuthor = $args['isAuthor'] ?? false;
 $pages = $args['pages'];
 $activePage = $args['activePage'];
 
-$paginationBaseLink = '/user-posts?page=';
+$paginationBaseLink = '/profile-posts?page=';
 
 $previous = $activePage > 1 ? $activePage - 1 : null;
 $next = $activePage < $pages ? $activePage + 1  : null;
@@ -22,9 +22,9 @@ $next = $activePage < $pages ? $activePage + 1  : null;
 
 <div class="container-sm">
     <?php
-    require ROOT_DIR . '/src/Views/template-parts/user-posts-grid.php';
+    require_once ROOT_DIR . '/src/Views/template-parts/user-posts-grid.php';
     if ($pages > 1) {
-        $pagination = new Pagination('Uset posts pagination', $paginationBaseLink, $pages, $activePage, $previous, $next);
+        $pagination = new Pagination('User posts pagination', $paginationBaseLink, $pages, $activePage, $previous, $next);
 
         $pagination->render();
     }

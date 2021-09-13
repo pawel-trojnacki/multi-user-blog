@@ -51,6 +51,8 @@ $app->post('/login', [AuthController::class, 'handleLogin']);
 
 $app->post('/logout', [AuthController::class, 'logout']);
 
+$app->get('/user', [UserController::class, 'user']);
+
 $app->get('/profile', [UserController::class, 'profile']);
 
 $app->post('/update-user-description', [UserController::class, 'updateDescription']);

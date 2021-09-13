@@ -24,7 +24,7 @@ $next = $activePage < $pages ? $activePage + 1  : null;
 
 <div class="container-sm my-5">
 
-    <?php require ROOT_DIR . '/src/Views/template-parts/posts-grid.php';
+    <?php require_once ROOT_DIR . '/src/Views/template-parts/posts-grid.php';
 
     if ($pages > 1) {
         $pagination = new Pagination('Articles pagination', $paginationBaseLink, $pages, $activePage, $previous, $next);

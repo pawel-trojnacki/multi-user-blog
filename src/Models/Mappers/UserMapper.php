@@ -35,7 +35,9 @@ class UserMapper
     {
         $pdo = App::$database->connection();
         $statement = $pdo->prepare('
-            SELECT user_name, user_email, user_description, user_avatar FROM users
+            SELECT user_id, user_name, user_email, user_description, user_avatar,
+            DATE_FORMAT(user_create_date, "%M %Y") AS user_date
+            FROM users
             WHERE user_id = ?;
         ');
         $statement->execute([$userId]);
