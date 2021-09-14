@@ -5,7 +5,8 @@ namespace App\Core;
 class Request
 {
     private const METHOD = 'REQUEST_METHOD';
-    private const PATH = 'PATH_INFO';
+    private const URI = 'REQUEST_URI';
+    private const PATH = 'path';
     public const GET = 'GET';
     public const POST = 'POST';
 
@@ -16,7 +17,8 @@ class Request
 
     public function path(): string
     {
-        return $_SERVER[self::PATH] ?? '/';
+        $uri = parse_url($_SERVER[self::URI]);
+        return $uri[self::PATH] ?? '/';
     }
 
     public function body(): array
