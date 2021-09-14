@@ -62,6 +62,26 @@ class PostMapper
         return $statement->fetchAll();
     }
 
+    public function fetchManyWithAuthorByQuery(int $offset, string $query): array
+    {
+        $pdo = App::$database->connection();
+        $statement = $pdo->prepare('
+            SELECT post_id, post_title, post_description, post_author,
+            post_views, post_image, post_category, post_content,
+            DATE_FORMAT(post_create_date, "%M %d, %Y") AS post_date,
+            user_name
+            FROM posts INNER JOIN users
+            ON post_author = user_id
+            WHERE LOWER(post_title) LIKE :query
+            ORDER BY post_create_date
+            DESC LIMIT 4 OFFSET :offset;
+        ');
+        $statement->bindValue(':query', '%' . $query . '%');
+        $statement->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->fetchAll();
+    }
+
     public function fetchAllWithAuthorByCategoryId(string $categoryId, int $offset): array
     {
         $pdo = App::$database->connection();
@@ -98,6 +118,17 @@ class PostMapper
           WHERE post_category = ?
         ');
         $statement->execute([$categoryId]);
+        return $statement->fetchColumn();
+    }
+
+    public function fetchPostsNumberByQuery(string $query): int
+    {
+        $pdo = App::$database->connection();
+        $statement = $pdo->prepare('
+          SELECT COUNT(post_id) FROM posts
+          WHERE LOWER(post_title) LIKE ?
+        ');
+        $statement->execute(['%' . $query . '%']);
         return $statement->fetchColumn();
     }
 

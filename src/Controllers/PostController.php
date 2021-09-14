@@ -69,6 +69,28 @@ class PostController extends MainControllerAbstract
         $this->render('user-posts', $args);
     }
 
+    public function search(): void
+    {
+        $query = App::$request->body()['query'] ?? '';
+
+        if (!$query) {
+            App::$response->redirect('/');
+        }
+
+        $page = App::$request->page();
+
+        $posts = $this->postService->fetchManyWithAuthorByQuery($page, $query);
+        $categories = $this->categoryService->getAllCategoriesAssoc();
+
+        $postsNumber = $this->postService->fetchPostsNumberByQuery($query);
+
+        $pages = $postsNumber > 4 ? (int)ceil($postsNumber / 4) : 1;
+
+        $args = ['query' => $query, 'activePage' => $page, 'posts' => $posts, 'pages' => $pages, 'categories' => $categories];
+
+        $this->render('search', $args);
+    }
+
     public function single(): void
     {
         $postId = App::$request->body()['id'];

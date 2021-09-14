@@ -29,6 +29,8 @@ $app->get('/posts', [PostController::class, 'posts']);
 
 $app->get('/post', [PostController::class, 'single']);
 
+$app->get('/search', [PostController::class, 'search']);
+
 $app->get('/publish', [PostController::class, 'publish']);
 
 $app->post('/publish', [PostController::class, 'handlePublish']);

@@ -64,6 +64,14 @@ class PostService
         return array_map(fn ($post) => $this->postWithMinutesToRead($post), $posts);
     }
 
+    public function fetchManyWithAuthorByQuery(int|string $page, string $query): array
+    {
+        $offset = $this->getOffset($page);
+        $posts = $this->postMapper->fetchManyWithAuthorByQuery($offset, $query);
+
+        return array_map(fn ($post) => $this->postWithMinutesToRead($post), $posts);
+    }
+
     public function fetchAllWithAuthorByCategoryId(string $categoryId, int|string $page): array
     {
         $offset = $this->getOffset($page);
@@ -86,6 +94,11 @@ class PostService
     public function fetchPostsNumberByUserId(string $userId): int
     {
         return $this->postMapper->fetchPostsNumberByUserId($userId);
+    }
+
+    public function fetchPostsNumberByQuery(string $query): int
+    {
+        return $this->postMapper->fetchPostsNumberByQuery($query);
     }
 
     public function fetchOneByIdWithAuthor(string $postId): array|false
